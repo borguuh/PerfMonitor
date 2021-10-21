@@ -3,6 +3,7 @@
 // Req:
 // - farmhash
 // - socket.io-client
+
 const os = require('os');
 const io = require('socket.io-client');
 let socket = io('http://127.0.0.1:8181');
@@ -31,6 +32,14 @@ socket.on('connect',()=>{
         }
     }
 
+    // client auth with single key value
+    socket.emit('clientAuth','5t78yuhgirekjaht32i3')
+
+    performanceData().then((allPerformanceData)=>{
+        allPerformanceData.macA = macA
+        socket.emit('initPerfData',allPerformanceData)
+    });
+
     // start sending over data on interval
     let perfDataInterval = setInterval(()=>{
         performanceData().then((allPerformanceData)=>{
@@ -39,10 +48,12 @@ socket.on('connect',()=>{
             socket.emit('perfData',allPerformanceData);
         })
     },1000);
+    
+    socket.on('disconnect',()=>{
+        clearInterval(perfDataInterval);
+    })
+
 })
-
-
-const os = require('os');
 
 function performanceData(){
     return new Promise(async (resolve, reject)=>{
@@ -68,7 +79,8 @@ function performanceData(){
         //  - Clock Speed
         const cpuSpeed = cpus[0].speed
         const cpuLoad = await getCpuLoad();
-        resolve({freeMem,totalMem,usedMem,memUseage,osType,upTime,cpuModel,numCores,cpuSpeed,cpuLoad})
+        const isActive = true;
+        resolve({freeMem,totalMem,usedMem,memUseage,osType,upTime,cpuModel,numCores,cpuSpeed,cpuLoad,isActive})
     })
 }
 
@@ -112,6 +124,3 @@ function getCpuLoad(){
     })
 }
 
-performanceData().then((allPerformanceData)=>{
-    console.log(allPerformanceData)
-})

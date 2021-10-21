@@ -12,7 +12,7 @@ function Mem(props){
     const freeMemInGB = Math.floor(freeMem/1073741824*100)/100;
     return(
         <div class="col-sm-3 mem">
-            <h3>Memory Useage</h3>
+            <h3>Memory Usage</h3>
             <div className="canvas-wrapper">
                 <canvas className={props.memData.memWidgetId} width="200" height="200"></canvas>
                 <div className="mem-text">

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1/perfData', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/perfData', {useNewUrlParser: true});
 const Machine = require('./models/Machine');
 
 function socketMain(io, socket){

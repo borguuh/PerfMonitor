@@ -25,8 +25,6 @@ class Widget extends Component{
             notActiveDiv = <div className="not-active">Offline</div>
         }
 
-
-
         return(
             <div className="widget col-sm-12">
                 {notActiveDiv}

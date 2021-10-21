@@ -1,3 +1,14 @@
+// Socket.io server that will service both node
+// and react clients
+// Req:
+// - socket.io
+// - socket.io-redis
+// - farmhash
+
+// entrypoint for the cluster which will make workers
+// and the workers will do the Socket.io handling
+//https://github.com/elad/node-cluster-socket.io
+
 const express = require('express');
 const cluster = require('cluster');
 const net = require('net');
